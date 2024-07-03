@@ -2,6 +2,7 @@
 #include "../TDD_CheckStringSimilarity/similarity.cpp"
 
 TEST(TestCaseName, TestName) {
-	EXPECT_EQ(1, 1);
-	EXPECT_TRUE(true);
+	SimilarityChecker checker;
+	int ret = checker.getSimilarity("ABC", "DEF");
+	EXPECT_EQ(ret, 60);
 }
