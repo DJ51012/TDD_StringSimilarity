@@ -4,8 +4,8 @@ using namespace std;
 
 class SimilarityChecker {
 public:
-	int getSimilarity(const string& s1, const string& s2) {
-		if (s1.length() == s2.length())
+	int getSimilarity(const string& str1, const string& str2) {
+		if (str1.length() == str2.length())
 			return 60;
 		return 0;
 	}
