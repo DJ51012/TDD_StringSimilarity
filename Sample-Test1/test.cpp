@@ -22,6 +22,30 @@ TEST(StringSimilarityTest, PartialScore) {
 TEST(StringSimilarityTest, NotCapital) {
 	SimilarityChecker checker;
 	int ret = checker.getCharScore("ABC", "DEFGa");
-	EXPECT_EQ(ret, 00);
+	EXPECT_EQ(ret, 0);
+}
+
+TEST(StringSimilarityTest, CheckSameAlphabet1) {
+	SimilarityChecker checker;
+	int ret = checker.getCharScore("ASD", "DSA");
+	EXPECT_EQ(ret, 40);
+}
+
+TEST(StringSimilarityTest, CheckSameAlphabet2) {
+	SimilarityChecker checker;
+	int ret = checker.getCharScore("A", "BB");
+	EXPECT_EQ(ret, 0);
+}
+
+TEST(StringSimilarityTest, CheckSameAlphabet3) {
+	SimilarityChecker checker;
+	int ret = checker.getCharScore("AAABB", "BA");
+	EXPECT_EQ(ret, 40);
+}
+
+TEST(StringSimilarityTest, CheckSameAlphabet4) {
+	SimilarityChecker checker;
+	int ret = checker.getCharScore("AA", "AAE");
+	EXPECT_EQ(ret, 20);
 }
 

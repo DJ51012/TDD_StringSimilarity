@@ -13,8 +13,24 @@ public:
 	int getCharScore(const string& str1, const string& str2) {
 		if (!checkStringValid(str1) || !checkStringValid(str2))
 			return 0;
-		return 40;
+
+		for (char ch : str1) {
+			isAlphabetUsed[ch - 'A'][0] = true;
+		}
+		for (char ch : str2) {
+			isAlphabetUsed[ch - 'A'][1] = true;
+		}
+
+		for (int i = 0; i < 26; i++) {
+			if (isAlphabetUsed[i][0] || isAlphabetUsed[i][1])
+				totalCount++;
+			if (isAlphabetUsed[i][0] && isAlphabetUsed[i][1])
+				sameCount++;
+		}
+
+		return (40 * sameCount) / totalCount;
 	}
+
 	bool checkStringValid(const string& str) {
 		for (char ch : str) {
 			if (!isCapital(ch))
@@ -25,6 +41,8 @@ public:
 	bool isCapital(char ch) {
 		return (ch >= 'A' && ch <= 'Z');
 	}
+
+
 
 	int getLengthScore(const string& str1, const string& str2)
 	{
@@ -61,4 +79,10 @@ public:
 		int gap = longLength - shortLength;
 		return (60 - 60 * gap / shortLength);
 	}
+
+private:
+	bool isAlphabetUsed[26][2] = { { false } };
+	int totalCount = 0;
+	int sameCount = 0;
 };
+
