@@ -9,41 +9,6 @@ public:
 		return getLengthScore(str1, str2) + getCharScore(str1, str2);
 	}
 
-//private:
-	int getCharScore(const string& str1, const string& str2) {
-		if (!checkStringValid(str1) || !checkStringValid(str2))
-			return 0;
-
-		for (char ch : str1) {
-			isAlphabetUsed[ch - 'A'][0] = true;
-		}
-		for (char ch : str2) {
-			isAlphabetUsed[ch - 'A'][1] = true;
-		}
-
-		for (int i = 0; i < 26; i++) {
-			if (isAlphabetUsed[i][0] || isAlphabetUsed[i][1])
-				totalCount++;
-			if (isAlphabetUsed[i][0] && isAlphabetUsed[i][1])
-				sameCount++;
-		}
-
-		return (40 * sameCount) / totalCount;
-	}
-
-	bool checkStringValid(const string& str) {
-		for (char ch : str) {
-			if (!isCapital(ch))
-				return false;
-		}
-		return true;
-	}
-	bool isCapital(char ch) {
-		return (ch >= 'A' && ch <= 'Z');
-	}
-
-
-
 	int getLengthScore(const string& str1, const string& str2)
 	{
 		if (checkLengthSame(str1, str2))
@@ -66,6 +31,20 @@ public:
 		return calculateLengthScore(longLength, shortLength);
 	}
 
+	int getCharScore(const string& str1, const string& str2) {
+		if (!checkStringValid(str1) || !checkStringValid(str2))
+			return 0;
+
+		setUsedAlphabet(str1, 0);
+		setUsedAlphabet(str2, 1);
+
+		checkAlphabetCount();
+
+		return calculateAlphabetScore();
+	}
+
+private:
+	// Length Score
 	bool checkLengthSame(const string& str1, const string& str2)
 	{
 		return (str1.length() == str2.length());
@@ -80,8 +59,40 @@ public:
 		return (60 - 60 * gap / shortLength);
 	}
 
+
+	// Alphabet Score
+	bool checkStringValid(const string& str) {
+		for (char ch : str) {
+			if (!isCapital(ch))
+				return false;
+		}
+		return true;
+	}
+	bool isCapital(char ch) {
+		return (ch >= 'A' && ch <= 'Z');
+	}
+	void setUsedAlphabet(const string& str, int stringNum) {
+		for (char ch : str) {
+			isAlphabetUsed[ch - 'A'][stringNum] = true;
+		}
+	}
+	void checkAlphabetCount() {
+		for (int i = 0; i < MAX_ALPHABET_COUNT; i++) {
+			if (isAlphabetUsed[i][0] || isAlphabetUsed[i][1])
+				totalCount++;
+			if (isAlphabetUsed[i][0] && isAlphabetUsed[i][1])
+				sameCount++;
+		}
+	}
+	int calculateAlphabetScore() {
+		return (40 * sameCount) / totalCount;
+	}
+
+
+
 private:
-	bool isAlphabetUsed[26][2] = { { false } };
+	static const int MAX_ALPHABET_COUNT = 26;
+	bool isAlphabetUsed[MAX_ALPHABET_COUNT][2] = { { false } };
 	int totalCount = 0;
 	int sameCount = 0;
 };
