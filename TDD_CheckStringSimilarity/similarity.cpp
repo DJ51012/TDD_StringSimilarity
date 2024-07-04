@@ -11,7 +11,7 @@ public:
 
 	int getLengthScore(const string& str1, const string& str2)
 	{
-		if (str1.length() == str2.length())
+		if (checkLengthSame(str1, str2))
 			return 60;
 
 		int longLength, shortLength;
@@ -25,9 +25,22 @@ public:
 			shortLength = str1.length();
 		}
 
-		if (longLength >= shortLength * 2)
+		if (checkMoreThanDoubleLength(longLength, shortLength))
 			return 0;
 
+		return calculateLengthScore(longLength, shortLength);
+	}
+
+	bool checkLengthSame(const string& str1, const string& str2)
+	{
+		return (str1.length() == str2.length());
+	}
+	bool checkMoreThanDoubleLength(int longLength, int shortLength)
+	{
+		return (longLength >= shortLength * 2);
+	}
+	int calculateLengthScore(int longLength, int shortLength)
+	{
 		int gap = longLength - shortLength;
 		return (60 - 60 * gap / shortLength);
 	}
