@@ -6,7 +6,24 @@ class SimilarityChecker {
 public:
 	int getSimilarity(const string& str1, const string& str2) {
 
-		return getLengthScore(str1, str2);
+		return getLengthScore(str1, str2) + getCharScore(str1, str2);
+	}
+
+//private:
+	int getCharScore(const string& str1, const string& str2) {
+		if (!checkStringValid(str1) || !checkStringValid(str2))
+			return 0;
+		return 40;
+	}
+	bool checkStringValid(const string& str) {
+		for (char ch : str) {
+			if (!isCapital(ch))
+				return false;
+		}
+		return true;
+	}
+	bool isCapital(char ch) {
+		return (ch >= 'A' && ch <= 'Z');
 	}
 
 	int getLengthScore(const string& str1, const string& str2)
