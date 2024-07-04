@@ -7,3 +7,15 @@ TEST(StringSimilarityTest, SameLength) {
 	EXPECT_EQ(ret, 60);
 }
 
+TEST(StringSimilarityTest, TwoTimesLonger) {
+	SimilarityChecker checker;
+	int ret = checker.getSimilarity("ABC", "DEFGHI");
+	EXPECT_EQ(ret, 0);
+}
+
+TEST(StringSimilarityTest, PartialScore) {
+	SimilarityChecker checker;
+	int ret = checker.getSimilarity("ABC", "DEFGH");
+	EXPECT_EQ(ret, 20);
+}
+
